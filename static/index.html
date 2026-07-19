@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="基于RAG的智能知识库问答系统">
+  <title>RAG 智能问答</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🧠</text></svg>">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js" defer></script>
+  <script type="module" src="/static/js/main.js" defer></script>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="对话历史">
+    <div class="sidebar-header">🧠 RAG System</div>
+    <button class="new-chat-btn" id="new-chat-btn" aria-label="开启新对话">
+      <span aria-hidden="true">＋</span> 新对话
+    </button>
+    <div class="history-list" id="history-list" role="list" aria-label="历史对话列表"></div>
+    <div class="sidebar-footer">
+      <div class="footer-actions">
+        <button class="footer-btn" id="export-btn" aria-label="导出对话" title="导出全部对话">📤</button>
+        <button class="footer-btn" id="import-btn" aria-label="导入对话" title="导入对话备份">📥</button>
+        <button class="footer-btn" id="theme-toggle-btn" aria-label="切换主题" title="切换浅色/深色/自动">🌓</button>
+      </div>
+      <input type="file" id="import-file-input" accept=".json" hidden>
+    </div>
+  </aside>
+
+  <main class="main-panel" id="main-panel">
+    <header class="chat-header">
+      <button class="menu-toggle" id="menu-toggle" aria-label="切换侧边栏" aria-expanded="false">☰</button>
+      <span id="chat-header-title">新对话</span>
+    </header>
+    <div class="messages-container" id="messages" role="log" aria-live="polite" aria-label="对话内容">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>欢迎使用 RAG 智能问答</h3>
+        <p>上传文档后即可开始提问</p>
+      </div>
+    </div>
+    <button class="scroll-bottom-btn" id="scroll-bottom-btn" aria-label="回到底部" title="回到底部">↓</button>
+    <footer class="input-area">
+      <div class="upload-area" id="upload-area">
+        <label class="file-label" for="file-input" title="上传文档" aria-label="上传文档">
+          <span class="file-label-icon">📎</span>
+          <span class="file-label-text">上传文档</span>
+        </label>
+        <div class="upload-progress" id="upload-progress-bar" style="display:none;"></div>
+        <span class="upload-status-text" id="upload-status-text" aria-live="polite"></span>
+      </div>
+      <input type="file" id="file-input" accept=".pdf,.txt,.md" hidden>
+      <div class="input-wrapper">
+        <textarea id="user-input" rows="1" placeholder="输入您的问题... (Enter 发送，Shift+Enter 换行)"
+                  aria-label="输入问题"></textarea>
+      </div>
+      <button class="send-btn" id="send-btn" aria-label="发送消息">
+        <span class="send-icon" aria-hidden="true">➤</span>
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="stop-icon" aria-hidden="true">■</span>
+      </button>
+    </footer>
+  </main>
+
+  <div id="drop-overlay" class="drop-overlay" aria-hidden="true">
+    <div class="drop-message">📂 释放文件以上传</div>
+  </div>
+
+  <div id="toast-container" aria-live="polite" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none;"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# 虚拟环境
+ai/
+
+# Python 编译缓存
+__pycache__/
+*.py[cod]
+*.so
+
+# 环境变量（密钥）
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 数据与日志
+data/
+logs/
+*.log
+
+# 向量数据库本地文件
+chroma_db/
